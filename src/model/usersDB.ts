@@ -1,4 +1,4 @@
-import { UserRecord } from './user.model';
+import { UserRecord } from './user.types';
 
 const usersDB: UserRecord[] = [];
 

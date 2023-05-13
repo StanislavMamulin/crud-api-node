@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { UserInfo, UserRecord, UserUpdate } from '../model/user.model';
+import { UserInfo, UserRecord, UserUpdate } from '../model/user.types';
 import { checkId, checkSearchResult } from '../helpers/validators.js';
-import { getUsersDB } from '../model/usersDB';
+import { getUsersDB } from '../model/usersDB.js';
 
 const usersDB = getUsersDB();
 
