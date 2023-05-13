@@ -7,7 +7,7 @@ import {
   UserNotFoundError,
 } from '../Errors/customErrors.js';
 import { USER_API_URL } from '../constants/api.js';
-import { UserInfo, UserRecord, isUserInfo } from '../model/user.types.js';
+import { UserInfo, UserRecord, UserUpdate, isUserInfo, isUserUpdate } from '../model/user.types.js';
 import { RouterCallback } from '../routers/router.types';
 import * as UserService from '../services/user.service.js';
 
@@ -71,6 +71,35 @@ export const createUser: RouterCallback = async (req, res) => {
         if (!user) throw new ServerInternalError();
 
         res.writeHead(201, { 'Content-Type': 'application/json' }).end(JSON.stringify(user));
+      } catch (err) {
+        HandleError(req, res, err);
+      }
+    });
+  } catch (error) {
+    HandleError(req, res, error);
+  }
+};
+
+export const updateUser: RouterCallback = async (req, res) => {
+  try {
+    if (!req.url) throw new InvalidUrlError();
+
+    const id = getID(req.url);
+    let body = '';
+
+    req.on('data', (chunk) => {
+      body += chunk.toString();
+    });
+
+    req.on('end', () => {
+      try {
+        const userInfo: UserUpdate = JSON.parse(body);
+        if (!isUserUpdate(userInfo)) throw new RequiredParametersNotProvided();
+
+        const user = UserService.updateUser(id, userInfo);
+        if (!user) throw new UserNotFoundError();
+
+        res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(user));
       } catch (err) {
         HandleError(req, res, err);
       }

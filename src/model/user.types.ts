@@ -20,3 +20,12 @@ export function isUserInfo(info: unknown): info is UserInfo {
     Array.isArray((info as UserInfo).hobbies)
   );
 }
+
+export function isUserUpdate(update: unknown): update is UserUpdate {
+  return (
+    ((update as UserUpdate).username !== undefined &&
+      typeof (update as UserUpdate).username === 'string') ||
+    ((update as UserUpdate).age !== undefined && typeof (update as UserUpdate).age === 'number') ||
+    ((update as UserUpdate).hobbies !== undefined && Array.isArray((update as UserUpdate).hobbies))
+  );
+}
