@@ -41,6 +41,18 @@ export class ServerInternalError extends BaseError {
   }
 };
 
+export class InvalidUrlError extends BaseError {
+  constructor(message: string = ErrorMessages.INVALID_URL) {
+    super(message, ErrorCodes.NOT_FOUND);
+  }
+};
+
+export class RequiredParametersNotProvided extends BaseError {
+  constructor(message: string = ErrorMessages.PARAMETERS_NOT_PROVIDED) {
+    super(message, ErrorCodes.BAD_REQUEST);
+  }
+};
+
 export const HandleError: RouterErrorCallback = (req, res, err) => {
   if (err instanceof BaseError) {
     res.writeHead(err.code).end(err.message);

@@ -5,4 +5,6 @@ export enum ErrorMessages {
   DEFAULT_SERVER_ERROR = 'Internal server error',
   INVALID_REQUEST = 'Invalid request',
   INVALID_URL_ID = 'ID not found in URL',
+  INVALID_URL = 'Invalid URL',
+  PARAMETERS_NOT_PROVIDED = 'Required parameters not provided',
 }
