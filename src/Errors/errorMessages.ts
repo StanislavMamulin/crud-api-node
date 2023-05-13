@@ -7,4 +7,5 @@ export enum ErrorMessages {
   INVALID_URL_ID = 'ID not found in URL',
   INVALID_URL = 'Invalid URL',
   PARAMETERS_NOT_PROVIDED = 'Required parameters not provided',
+  SYNTAX_ERROR = 'Syntax error. Possible reasons: Invalid JSON format.',
 }

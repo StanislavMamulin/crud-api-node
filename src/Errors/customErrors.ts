@@ -54,7 +54,9 @@ export class RequiredParametersNotProvided extends BaseError {
 };
 
 export const HandleError: RouterErrorCallback = (req, res, err) => {
-  if (err instanceof BaseError) {
+  if (err instanceof SyntaxError) {
+    res.writeHead(ErrorCodes.BAD_REQUEST).end(ErrorMessages.SYNTAX_ERROR);
+  } else if (err instanceof BaseError) {
     res.writeHead(err.code).end(err.message);
   } else {
     const { code, message } = new ServerInternalError();
