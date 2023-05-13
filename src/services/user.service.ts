@@ -7,8 +7,11 @@ const usersDB = getUsersDB();
 
 export const getUsers = (): UserRecord[] => usersDB;
 
-export const createUser = (user: UserInfo) => {
-  usersDB.push({ id: uuidv4(), ...user });
+export const createUser = (user: UserInfo): UserRecord => {
+  const newUser: UserRecord = { id: uuidv4(), ...user };
+  usersDB.push(newUser);
+
+  return newUser;
 };
 
 export const getUser = (id: string) => {
