@@ -29,12 +29,7 @@ module.exports = {
     'class-methods-use-this': 'off',
     'node/no-unsupported-features/es-syntax': 'off',
     'import/no-unresolved': 'off',
-    'node/no-missing-import': [
-      'error',
-      {
-        tryExtensions: ['.ts'],
-      },
-    ],
+    'node/no-missing-import': 'off',
     'import/extensions': 'off',
     'no-param-reassign': ['error', { props: false }],
     'import/prefer-default-export': 'off',
