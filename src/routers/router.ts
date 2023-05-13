@@ -2,6 +2,7 @@ import { HandleError, InvalidUrlError } from '../Errors/customErrors.js';
 import { USER_API_URL } from '../constants/api.js';
 import {
   createUser,
+  deleteUser,
   getAllUsers,
   getUserById,
   updateUser,
@@ -28,7 +29,7 @@ export const router: RouterCallback = async (req, res): Promise<void> => {
     } else if (method === 'PUT') {
       updateUser(req, res);
     } else if (method === 'DELETE') {
-      // deleteUser(req, res);
+      deleteUser(req, res);
     }
   } catch (error) {
     HandleError(req, res, error);

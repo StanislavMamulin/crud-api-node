@@ -108,3 +108,16 @@ export const updateUser: RouterCallback = async (req, res) => {
     HandleError(req, res, error);
   }
 };
+
+export const deleteUser: RouterCallback = async (req, res) => {
+  try {
+    if (!req.url) throw new InvalidUrlError();
+
+    const id = getID(req.url);
+    UserService.deleteUser(id);
+
+    res.writeHead(204, { 'Content-Type': 'application/json' }).end();
+  } catch (error) {
+    HandleError(req, res, error);
+  }
+};
