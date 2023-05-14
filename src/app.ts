@@ -1,11 +1,6 @@
-import { createServer } from 'http';
-import { router } from './routers/router.js';
+import { server } from './server.js';
 
 const PORT = process.env.PORT || 4000;
-
-const server = createServer();
-
-server.on('request', router);
 
 server.listen(PORT, () => {
   console.log('Server is running');
