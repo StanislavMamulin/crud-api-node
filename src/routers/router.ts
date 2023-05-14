@@ -17,7 +17,7 @@ export const router: RouterCallback = async (req, res): Promise<void> => {
       throw new InvalidUrlError();
     }
 
-    const id = req.url.split(`${USER_API_URL}/`).pop();
+    const id = req.url.split(`${USER_API_URL}/`)[1];
     if (method === 'GET') {
       if (!id) {
         getAllUsers(req, res);
