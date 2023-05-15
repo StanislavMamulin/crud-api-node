@@ -4,11 +4,9 @@ This is the simple Node.js CRUD API server using in-memory database underneath.
 Implemented horizontal scaling for application using the Node.js Cluster API.
 
 ## Technical requirements
----
 - 18 LTS version of Node.js
 
 ## Endpoints
----
 - **GET** `api/users` is used to get all persons
   - Server should answer with `status code` **200** and all users records
 - **GET** `api/users/{userId}` 
@@ -28,7 +26,6 @@ Implemented horizontal scaling for application using the Node.js Cluster API.
   - Server should answer with `status code` **404** and corresponding message if record with `id === userId` doesn't exist
 
 ## Start server
----
 ### To run in development mode
 - npm run start:dev
 ### To run run in production mode
