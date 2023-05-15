@@ -1,9 +1,11 @@
 import { describe, it, expect } from '@jest/globals';
 import request from 'supertest';
-import { server } from '../server';
+import { createHTTPServer } from '../server';
 import { ErrorMessages } from '../Errors/errorMessages';
 import { UserRecord } from '../model/user.types';
 
+const testDB: UserRecord[] = [];
+const server = createHTTPServer(testDB);
 const serverRequest = request(server);
 
 const testUser = { username: 'Gordon Freeman', age: 42, hobbies: ['Physics', 'Save the World'] };

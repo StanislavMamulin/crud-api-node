@@ -1,6 +1,17 @@
 import { createServer } from 'http';
 import { router } from './routers/router.js';
+import { UserRecord } from './model/user.types.js';
+import { CreateHTTPServer, GetDB } from './server.types.js';
 
-export const server = createServer();
+let database: UserRecord[];
 
-server.on('request', router);
+export const createHTTPServer: CreateHTTPServer = (DB: UserRecord[]) => {
+  database = DB;
+  const server = createServer();
+
+  server.on('request', router);
+
+  return server;
+};
+
+export const getDB: GetDB = () => database;

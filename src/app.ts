@@ -1,8 +1,17 @@
-import { server } from './server.js';
+import { getUsersDB } from './model/usersDB.js';
+import { createHTTPServer } from './server.js';
 
 const PORT = process.env.PORT || 4000;
 
-server.listen(PORT, () => {
-  console.log('Server is running');
-  console.log(`http://localhost:${PORT}`);
-});
+export const startApp = () => {
+  const usersDB = getUsersDB();
+  const server = createHTTPServer(usersDB);
+
+  server.listen(PORT, () => {
+    console.log(`Server is running: http://localhost:${PORT}`);
+  });
+
+  return server;
+};
+
+startApp();

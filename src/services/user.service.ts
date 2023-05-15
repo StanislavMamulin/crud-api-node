@@ -1,13 +1,12 @@
 import { v4 as uuidv4 } from 'uuid';
 import { UserInfo, UserRecord, UserUpdate } from '../model/user.types';
 import { checkId, checkSearchResult } from '../helpers/validators.js';
-import { getUsersDB } from '../model/usersDB.js';
+import { getDB } from '../server.js';
 
-const usersDB = getUsersDB();
-
-export const getUsers = (): UserRecord[] => usersDB;
+export const getUsers = (): UserRecord[] => getDB();
 
 export const createUser = (user: UserInfo): UserRecord => {
+  const usersDB = getDB();
   const newUser: UserRecord = { id: uuidv4(), ...user };
   usersDB.push(newUser);
 
@@ -15,6 +14,7 @@ export const createUser = (user: UserInfo): UserRecord => {
 };
 
 export const getUser = (id: string) => {
+  const usersDB = getDB();
   checkId(id);
 
   const user = usersDB.find((userRecord) => userRecord.id === id);
@@ -24,6 +24,7 @@ export const getUser = (id: string) => {
 };
 
 export const updateUser = (id: string, userInfo: UserUpdate): UserRecord => {
+  const usersDB = getDB();
   checkId(id);
 
   const userIndex = usersDB.findIndex((user) => user.id === id);
@@ -36,6 +37,7 @@ export const updateUser = (id: string, userInfo: UserUpdate): UserRecord => {
 };
 
 export const deleteUser = (id: string) => {
+  const usersDB = getDB();
   checkId(id);
 
   const userIndex = usersDB.findIndex((user) => user.id === id);
