@@ -10,7 +10,7 @@ const serverRequest = request(server);
 
 const testUser = { username: 'Gordon Freeman', age: 42, hobbies: ['Physics', 'Save the World'] };
 
-describe('GET /api/users', () => {
+describe('/api/users', () => {
   afterAll((done) => {
     server.close();
     done();
@@ -20,17 +20,48 @@ describe('GET /api/users', () => {
     serverRequest.get('/api/users').expect(200, [], done);
   });
 
-  it('should create user', (done) => {
-    serverRequest.post('/api/users').send(testUser).expect(201, done);
+  it('should correct create and delete users', async () => {
+    let users;
+    const user1 = (await serverRequest.post('/api/users').send(testUser).expect(201)).body;
 
-    serverRequest.get('/api/users').end((err, res) => {
-      const users = res.body;
-      expect(users).toHaveLength(1);
-      done();
-    });
+    users = (await serverRequest.get('/api/users')).body;
+    expect(users).toHaveLength(1);
+
+    const user2 = (await serverRequest.post('/api/users').send(testUser)).body;
+    const user3 = (await serverRequest.post('/api/users').send(testUser)).body;
+    const user4 = (await serverRequest.post('/api/users').send(testUser)).body;
+
+    users = (await serverRequest.get('/api/users')).body;
+    expect(users).toHaveLength(4);
+
+    await serverRequest.delete(`/api/users/${user1.id}`);
+    await serverRequest.delete(`/api/users/${user2.id}`);
+    users = (await serverRequest.get('/api/users')).body;
+    expect(users).toHaveLength(2);
+    await serverRequest.delete(`/api/users/${user3.id}`);
+    await serverRequest.delete(`/api/users/${user4.id}`);
+
+    const usersAfterDeleteAll = (await serverRequest.get('/api/users')).body;
+    expect(usersAfterDeleteAll).toHaveLength(0);
   });
 
-  it('should work correctly. First scenario.', async () => {
+  it('should created users have unique ID', async () => {
+    const user1 = (await serverRequest.post('/api/users').send(testUser).expect(201)).body;
+    const user2 = (await serverRequest.post('/api/users').send(testUser).expect(201)).body;
+    const user3 = (await serverRequest.post('/api/users').send(testUser).expect(201)).body;
+    const user4 = (await serverRequest.post('/api/users').send(testUser).expect(201)).body;
+
+    expect(user1.id).not.toEqual(user2.id);
+    expect(user1.id).not.toEqual(user3.id);
+    expect(user1.id).not.toEqual(user4.id);
+
+    serverRequest.delete(`/api/users/${user1.id}`);
+    serverRequest.delete(`/api/users/${user2.id}`);
+    serverRequest.delete(`/api/users/${user3.id}`);
+    serverRequest.delete(`/api/users/${user4.id}`);
+  });
+
+  it('should work correctly. Basic scenario.', async () => {
     // Get all records with a GET api/users request (an empty array is expected)
     serverRequest.get('/api/users').expect(200, '[]');
 
@@ -67,3 +98,5 @@ describe('GET /api/users', () => {
       .expect(404, ErrorMessages.USER_NOT_FOUND);
   });
 });
+
+// no id duplication
