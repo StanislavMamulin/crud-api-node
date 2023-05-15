@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "start:dev": "nodemon --esm src/app.ts",
+    "start:dev": "cross-env NODE_ENV=DEVELOPMENT nodemon --esm src/app.ts",
+    "start:prod": "cross-env NODE_ENV=PRODUCTION tsc & node dist/app.js",
     "start:multi": "ts-node --esm src/multi.ts",
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest"
   },
